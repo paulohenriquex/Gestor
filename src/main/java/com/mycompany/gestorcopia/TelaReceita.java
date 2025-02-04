@@ -20,6 +20,7 @@ public class TelaReceita extends javax.swing.JInternalFrame {
         initComponents();
         criarTabela();
         carregarIngredientes(); // Carrega os ingredientes no JComboBox
+        carregarReceitasNaTabela();
         setSize(600, 400);
         setLocation(50, 50);
         setVisible(true);
