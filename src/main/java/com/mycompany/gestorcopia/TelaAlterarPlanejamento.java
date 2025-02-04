@@ -8,14 +8,14 @@ public class TelaAlterarPlanejamento extends javax.swing.JInternalFrame {
 
         private Planejamento planejamento;
         private GerenciarPlanejamento gerPla;
-        private TelaPlanejamento telaPlanejamento; // Adiciona uma referência para a TelaPlanejamento
+        private TelaPlanejamento telaPlanejamento;
 
         public TelaAlterarPlanejamento(Planejamento planejamento, GerenciarPlanejamento gerPla,
                         TelaPlanejamento telaPlanejamento) {
                 super("Alterar Planejamento", true, true, true, true);
                 this.planejamento = planejamento;
                 this.gerPla = gerPla;
-                this.telaPlanejamento = telaPlanejamento; // Armazena a referência
+                this.telaPlanejamento = telaPlanejamento;
                 initComponents();
                 carregarDadosPlanejamento();
                 carregarReceitas();
@@ -141,7 +141,6 @@ public class TelaAlterarPlanejamento extends javax.swing.JInternalFrame {
         }// </editor-fold>//GEN-END:initComponents
 
         private void carregarDadosPlanejamento() {
-                // Carrega os dados do planejamento na tela
                 tfData.setText(planejamento.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                 tfServico.setText(planejamento.getServico());
                 cbReceitas.setSelectedItem(planejamento.getReceita().getNome());
@@ -149,9 +148,7 @@ public class TelaAlterarPlanejamento extends javax.swing.JInternalFrame {
         }
 
         private void carregarReceitas() {
-                // Limpa o ComboBox
                 cbReceitas.removeAllItems();
-
                 for (Receita r : gerPla.getReceitas()) {
                         cbReceitas.addItem(r.getNome());
                 }
@@ -159,14 +156,9 @@ public class TelaAlterarPlanejamento extends javax.swing.JInternalFrame {
 
         private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSalvarActionPerformed
                 try {
-                        // Converte a data
                         LocalDate novaData = LocalDate.parse(tfData.getText(),
                                         DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-                        // Obtém o serviço
                         String novoServico = tfServico.getText();
-
-                        // Obtém a receita selecionada
                         String nomeReceitaSelecionada = (String) cbReceitas.getSelectedItem();
                         Receita novaReceita = null;
                         for (Receita r : gerPla.getReceitas()) {
@@ -175,15 +167,11 @@ public class TelaAlterarPlanejamento extends javax.swing.JInternalFrame {
                                         break;
                                 }
                         }
-
-                        // Valida se a receita foi encontrada
                         if (novaReceita == null) {
                                 JOptionPane.showMessageDialog(this, "Erro: Receita não encontrada.", "Erro",
                                                 JOptionPane.ERROR_MESSAGE);
                                 return;
                         }
-
-                        // Obtém o quantitativo
                         int novoQuantitativo;
                         try {
                                 novoQuantitativo = Integer.parseInt(tfQuantitativo.getText());
@@ -198,23 +186,14 @@ public class TelaAlterarPlanejamento extends javax.swing.JInternalFrame {
                                                 JOptionPane.ERROR_MESSAGE);
                                 return;
                         }
-
-                        // Atualiza os dados do planejamento
                         planejamento.setData(novaData);
                         planejamento.setServico(novoServico);
                         planejamento.setReceita(novaReceita);
                         planejamento.setQuantitativo(novoQuantitativo);
                         planejamento.setCustoDoDia(novaReceita.getCustoDaReceita() * novoQuantitativo);
-
-                        // Atualiza a tabela na TelaPlanejamento
-                        telaPlanejamento.atualizarTabela(); // CHAMA O MÉTODO PARA ATUALIZAR A TABELA
-
-                        // Exibe uma mensagem de sucesso
+                        telaPlanejamento.atualizarTabela();
                         JOptionPane.showMessageDialog(this, "Planejamento alterado com sucesso!");
-
-                        // Fecha a tela de alteração
                         this.dispose();
-
                 } catch (Exception e) {
                         JOptionPane.showMessageDialog(this, "Erro ao alterar planejamento: " + e.getMessage(), "Erro",
                                         JOptionPane.ERROR_MESSAGE);

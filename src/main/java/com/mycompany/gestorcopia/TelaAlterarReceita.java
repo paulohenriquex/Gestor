@@ -8,13 +8,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class TelaAlterarReceita extends javax.swing.JInternalFrame {
 
-        private JTable tabelaIngredientes; // Defina o JTable
+        private JTable tabelaIngredientes;
         private Receita receitaSelecionada;
         private ArrayList<Produto> produtos;
         private ArrayList<Receita> receitas;
         private DefaultTableModel modeloTabela;
-        private TelaReceita telaReceita; // Adicione esta variável
-        private GerenciarReceita gerRec; // Adicione esta variável
+        private TelaReceita telaReceita;
+        private GerenciarReceita gerRec;
 
         public TelaAlterarReceita(Receita receita, ArrayList<Produto> produtos, ArrayList<Receita> r,
                         DefaultTableModel modelo, int linhaSelecionada, TelaReceita telaReceita,
@@ -24,12 +24,12 @@ public class TelaAlterarReceita extends javax.swing.JInternalFrame {
                 this.produtos = produtos;
                 this.receitas = r;
                 this.modeloTabela = modelo;
-                this.telaReceita = telaReceita; // Inicialize a variável
-                this.gerRec = gerRec; // Inicialize a variável
+                this.telaReceita = telaReceita;
+                this.gerRec = gerRec;
 
-                initComponents(); // Chame o método initComponents para inicializar os componentes
-                criarTabela(); // Certifique-se de que a tabela é criada aqui
-                preencherCampos(linhaSelecionada); // Passar a linha selecionada
+                initComponents();
+                criarTabela();
+                preencherCampos(linhaSelecionada);
                 pack();
         }
 
@@ -180,18 +180,14 @@ public class TelaAlterarReceita extends javax.swing.JInternalFrame {
                 carregarIngredientes();
                 atualizarTabelaIngredientes();
 
-                // Verifique se a tabela tem linhas e se a linha selecionada é válida
                 if (modeloTabela.getRowCount() > 0 && linhaSelecionada >= 0
                                 && linhaSelecionada < modeloTabela.getRowCount()) {
-                        String nomeIngrediente = modeloTabela.getValueAt(linhaSelecionada, 0).toString(); // Nome do
-                                                                                                          // ingrediente
+                        String nomeIngrediente = modeloTabela.getValueAt(linhaSelecionada, 0).toString();
+
                         for (Ingrediente ingrediente : receitaSelecionada.getIngredientes()) {
                                 if (ingrediente.getProduto().getNome().equals(nomeIngrediente)) {
-                                        tfPercapta.setText(String.valueOf(ingrediente.getPercapta())); // Preencher o
-                                                                                                       // percapta
-                                        cbIngredientes.setSelectedItem(ingrediente.getProduto().getNome()); // Selecionar
-                                                                                                            // o
-                                                                                                            // ingrediente
+                                        tfPercapta.setText(String.valueOf(ingrediente.getPercapta()));
+                                        cbIngredientes.setSelectedItem(ingrediente.getProduto().getNome());
                                         break;
                                 }
                         }
@@ -206,17 +202,15 @@ public class TelaAlterarReceita extends javax.swing.JInternalFrame {
                                 new String[] { "Nome do Ingrediente", "Percapta", "Custo" }) {
                         @Override
                         public boolean isCellEditable(int row, int column) {
-                                return false; // Não permite edição direta na tabela
+                                return false;
                         }
                 };
 
                 tabelaIngredientes = new JTable(modeloTabela);
 
-                // Adiciona a tabela a um JScrollPane
                 JScrollPane scrollPane = new JScrollPane(tabelaIngredientes);
 
-                // Adiciona o JScrollPane ao layout
-                getContentPane().add(scrollPane); // Certifique-se de que isso está no layout correto
+                getContentPane().add(scrollPane);
         }
 
         private void carregarIngredientes() {
@@ -227,18 +221,16 @@ public class TelaAlterarReceita extends javax.swing.JInternalFrame {
         }
 
         private void atualizarTabelaIngredientes() {
-                modeloTabela.setRowCount(0); // Limpa a tabela antes de adicionar os ingredientes atualizados
+                modeloTabela.setRowCount(0);
 
-                // Iterar apenas sobre os ingredientes da receita selecionada
                 for (Ingrediente ingrediente : receitaSelecionada.getIngredientes()) {
-                        // Recalcular o custo apenas do ingrediente
                         float custoIngrediente = ingrediente.getProduto().getPreco()
                                         * (ingrediente.getPercapta() / 1000);
 
                         modeloTabela.addRow(new Object[] {
-                                        ingrediente.getProduto().getNome(), // Nome do ingrediente
-                                        ingrediente.getPercapta(), // Quantidade percapta
-                                        custoIngrediente // Cálculo do custo atualizado para o ingrediente
+                                        ingrediente.getProduto().getNome(),
+                                        ingrediente.getPercapta(),
+                                        custoIngrediente
                         });
                 }
         }
@@ -252,12 +244,10 @@ public class TelaAlterarReceita extends javax.swing.JInternalFrame {
                                         JOptionPane.WARNING_MESSAGE);
                         return;
                 }
-
                 ArrayList<Ingrediente> novosIngredientes = new ArrayList<>();
                 for (Ingrediente ingrediente : receitaSelecionada.getIngredientes()) {
                         String nomeIngredienteSelecionado = cbIngredientes.getSelectedItem().toString();
                         float novoPercapta;
-
                         try {
                                 novoPercapta = Float.parseFloat(tfPercapta.getText().trim());
                                 if (novoPercapta <= 0) {
@@ -270,20 +260,18 @@ public class TelaAlterarReceita extends javax.swing.JInternalFrame {
                                                 JOptionPane.WARNING_MESSAGE);
                                 return;
                         }
-
                         if (ingrediente.getProduto().getNome().equals(nomeIngredienteSelecionado)) {
                                 ingrediente.setPercapta(novoPercapta);
                         }
-                        novosIngredientes.add(ingrediente); // Adiciona o ingrediente atualizado à nova lista
+                        novosIngredientes.add(ingrediente);
                 }
 
-                // Chamar o método de alteração no GerenciarReceita
                 gerRec.alterarReceita(receitaSelecionada, novoNome, novoModoDePreparo, novosIngredientes);
 
                 atualizarTabelaIngredientes();
-                telaReceita.atualizarTabelaReceitas(); // Atualiza a tabela na TelaReceita
+                telaReceita.atualizarTabelaReceitas();
                 JOptionPane.showMessageDialog(this, "Receita alterada com sucesso!");
-                dispose(); // Fecha a tela de alteração
+                dispose();
         }// GEN-LAST:event_btnSalvarActionPerformed
 
         // Variables declaration - do not modify//GEN-BEGIN:variables

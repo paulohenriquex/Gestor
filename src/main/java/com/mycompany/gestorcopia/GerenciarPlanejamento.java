@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class GerenciarPlanejamento {
     private ArrayList<Receita> receitas;
-    private ArrayList<Planejamento> planejamentos; // Lista para armazenar planejamentos.
+    private ArrayList<Planejamento> planejamentos;
 
     public GerenciarPlanejamento(ArrayList<Receita> r, ArrayList<Planejamento> p) {
         receitas = r;
@@ -23,22 +23,20 @@ public class GerenciarPlanejamento {
             return "Data inválida!";
         } else if (custoDoDia < 0) {
             return "Custo do dia inválido!";
-        } else if (quantitativo <= 0) { // Alterado para <= 0 para incluir zero
+        } else if (quantitativo <= 0) {
             return "Quantitativo inválido!";
         }
 
         Planejamento planejamento = new Planejamento(id, data, servico, receitas.get(idReceita),
                 custoDoDia, quantitativo);
-        planejamentos.add(planejamento); // Adiciona o planejamento na lista
+        planejamentos.add(planejamento);
         return log;
     }
 
-    // Método para retornar a lista de planejamentos
     public ArrayList<Planejamento> getPlanejamentos() {
         return planejamentos;
     }
 
-    // Método para excluir um planejamento
     public String excluirPlanejamento(Planejamento p) {
         String log = "";
         if (planejamentos.remove(p)) {
@@ -53,27 +51,26 @@ public class GerenciarPlanejamento {
     public String alterarPlanejamento(int id, LocalDate data, String servico, Receita receita,
             float custoDoDia, int quantitativo) {
 
-        // Verifica se o planejamento existe
         boolean planejamentoEncontrado = false;
         String log = "";
 
         for (Planejamento p : planejamentos) {
             if (p.getId() == id) {
-                planejamentoEncontrado = true; // O planejamento foi encontrado
+                planejamentoEncontrado = true;
                 p.setData(data);
                 p.setServico(servico);
                 p.setReceita(receita);
                 p.setCustoDoDia(custoDoDia);
                 p.setQuantitativo(quantitativo);
-                break; // Sai do loop após encontrar e atualizar
+                break;
             }
         }
 
         if (!planejamentoEncontrado) {
-            log = "Planejamento não encontrado!"; // Retorna erro se não encontrou
+            log = "Planejamento não encontrado!";
         }
 
-        return log; // Retorna log vazio se tudo ocorreu bem
+        return log;
     }
 
     public Planejamento buscarPlanejamento(int id) {

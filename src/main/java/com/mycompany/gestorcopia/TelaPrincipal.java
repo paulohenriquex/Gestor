@@ -40,7 +40,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -104,13 +105,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 368, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 368, Short.MAX_VALUE));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 270, Short.MAX_VALUE)
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 270, Short.MAX_VALUE));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -129,17 +128,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jmGerenciarProdutoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmGerenciarProdutoActionPerformed
         // Verifica se a telaProduto já está visível
         if (telaProduto != null && telaProduto.isVisible()) {
-            telaProduto.toFront(); // Leva a janela para frente
+            telaProduto.toFront();
         } else {
             telaProduto = new TelaProduto(produtos, gerPro);
-            telas.add(telaProduto); // Adiciona a tela ao JDesktopPane
-            telaProduto.setVisible(true); // Exibe a tela
+            telas.add(telaProduto);
+            telaProduto.setVisible(true);
         }
     }// GEN-LAST:event_jmGerenciarProdutoActionPerformed
 
     private void jmGerenciarReceitaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmGerenciarReceitaActionPerformed
         if (telaReceita != null && telaReceita.isVisible()) {
-            telaReceita.toFront(); // Traz a janela para frente se já estiver aberta
+            telaReceita.toFront();
         } else {
             telaReceita = new TelaReceita(produtos, receitas, gerRec);
             telas.add(telaReceita);
@@ -188,21 +187,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // public void inserirDados() {
-    //     produtos.add(new Produto(0, "Farinha de Trigo", 5.50f, "kg"));
-    //     produtos.add(new Produto(1, "Açúcar", 4.20f, "kg"));
-    //     produtos.add(new Produto(2, "Leite", 3.80f, "litro"));
+    // produtos.add(new Produto(0, "Farinha de Trigo", 5.50f, "kg"));
+    // produtos.add(new Produto(1, "Açúcar", 4.20f, "kg"));
+    // produtos.add(new Produto(2, "Leite", 3.80f, "litro"));
 
-    //     ingredientes.add(new Ingrediente(produtos.get(0), 0.250f)); // 250g de Farinha de Trigo
-    //     ingredientes.add(new Ingrediente(produtos.get(1), 0.100f)); // 100g de Açúcar
-    //     ingredientes.add(new Ingrediente(produtos.get(2), 0.200f)); // 200ml de Leite
+    // ingredientes.add(new Ingrediente(produtos.get(0), 0.250f)); // 250g de
+    // Farinha de Trigo
+    // ingredientes.add(new Ingrediente(produtos.get(1), 0.100f)); // 100g de Açúcar
+    // ingredientes.add(new Ingrediente(produtos.get(2), 0.200f)); // 200ml de Leite
 
-    //     receitas.add(new Receita(0, "Bolo Simples", "Misturar tudo e assar.", ingredientes, 12.50f));
-    //     receitas.add(new Receita(1, "Pudim", "Bater no liquidificador e assar em banho-maria.", ingredientes, 15.30f));
-    //     receitas.add(new Receita(2, "Panqueca", "Misturar, fritar em frigideira e rechear.", ingredientes, 10.80f));
+    // receitas.add(new Receita(0, "Bolo Simples", "Misturar tudo e assar.",
+    // ingredientes, 12.50f));
+    // receitas.add(new Receita(1, "Pudim", "Bater no liquidificador e assar em
+    // banho-maria.", ingredientes, 15.30f));
+    // receitas.add(new Receita(2, "Panqueca", "Misturar, fritar em frigideira e
+    // rechear.", ingredientes, 10.80f));
 
-    //     planejamentos.add(new Planejamento(0, LocalDate.of(2025, 2, 5), "Café da Manhã", receitas.get(0), 50.00f, 10));
-    //     planejamentos.add(new Planejamento(1, LocalDate.of(2025, 2, 6), "Sobremesa", receitas.get(1), 60.00f, 15));
-    //     planejamentos.add(new Planejamento(2, LocalDate.of(2025, 2, 7), "Lanche da Tarde", receitas.get(2), 40.00f, 8));
+    // planejamentos.add(new Planejamento(0, LocalDate.of(2025, 2, 5), "Café da
+    // Manhã", receitas.get(0), 50.00f, 10));
+    // planejamentos.add(new Planejamento(1, LocalDate.of(2025, 2, 6), "Sobremesa",
+    // receitas.get(1), 60.00f, 15));
+    // planejamentos.add(new Planejamento(2, LocalDate.of(2025, 2, 7), "Lanche da
+    // Tarde", receitas.get(2), 40.00f, 8));
 
     // }
 

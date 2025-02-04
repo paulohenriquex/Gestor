@@ -12,13 +12,13 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
         private ArrayList<Receita> receitas;
         private GerenciarPlanejamento gerPla;
         private int id = 0;
-        private JDesktopPane telas; // Adiciona a referência do JDesktopPane
+        private JDesktopPane telas;
 
         public TelaPlanejamento(ArrayList<Receita> r, GerenciarPlanejamento gp) {
                 super("Planejamento", true, true, true, true);
                 receitas = r;
                 gerPla = gp;
-                this.telas = telas; // Inicializa a referência do JDesktopPane
+                this.telas = telas;
                 initComponents();
                 criarTabela();
                 carregarReceitas();
@@ -196,21 +196,17 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
         }// </editor-fold>//GEN-END:initComponents
 
         protected void atualizarTabela() {
-                // Cria o modelo de tabela
                 DefaultTableModel model = (DefaultTableModel) tablePlanejamento.getModel();
 
-                // Limpa os dados antigos
                 model.setRowCount(0);
 
-                // Adiciona os planejamentos na tabela
                 for (Planejamento p : gerPla.getPlanejamentos()) {
-                        // Adiciona uma linha com os dados do planejamento
                         model.addRow(new Object[] {
-                                        p.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), // Data
-                                        p.getServico(), // Serviço
-                                        p.getReceita().getNome(), // Receita
-                                        p.getQuantitativo(), // Quantitativo
-                                        p.getCustoDoDia()// Custo Total
+                                        p.getData().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                                        p.getServico(),
+                                        p.getReceita().getNome(),
+                                        p.getQuantitativo(),
+                                        p.getCustoDoDia()
                         });
                 }
         }
@@ -224,27 +220,17 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
         }
 
         private void carregarReceitas() {
-                // Limpa o ComboBox
                 cbReceita.removeAllItems();
 
-                // Adiciona os nomes das receitas ao ComboBox
                 for (Receita r : receitas) {
-                        cbReceita.addItem(r.getNome()); // Adiciona o nome da receita
+                        cbReceita.addItem(r.getNome());
                 }
         }
 
         private void btnSalvarPlanejamentoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnSalvarPlanejamentoActionPerformed
-                // try {
-                // Pega a data e converte
                 LocalDate data = LocalDate.parse(tfData.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-                // Pega o serviço
                 String servico = tfServico.getText();
-
-                // Pega o nome da receita selecionada
                 String nomeReceitaSelecionada = (String) cbReceita.getSelectedItem();
-
-                // Encontra a receita correspondente ao nome selecionado
                 Receita receita = null;
                 for (Receita r : receitas) {
                         if (r.getNome().equals(nomeReceitaSelecionada)) {
@@ -259,7 +245,6 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
                         return;
                 }
 
-                // Pega o quantitativo e verifica se é válido
                 int quantitativo;
                 try {
                         quantitativo = Integer.parseInt(tfQuantitativo.getText());
@@ -274,29 +259,20 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
                         return;
                 }
 
-                // Salva o planejamento chamando o método da classe GerenciarPlanejamento
                 String log = gerPla.inserirPlanejamento(id, data, servico, receitas.indexOf(receita),
                                 receita.getCustoDaReceita() * quantitativo, quantitativo);
                 id++;
 
-                // Exibe uma mensagem de sucesso ou erro
                 if (log.isEmpty()) {
                         JOptionPane.showMessageDialog(this, "Planejamento salvo com sucesso!");
-                        atualizarTabela(); // Atualiza a tabela após salvar
+                        atualizarTabela();
                 } else {
                         JOptionPane.showMessageDialog(this, log, "Erro", JOptionPane.ERROR_MESSAGE);
                 }
-
-                // } catch (Exception e) {
-                // JOptionPane.showMessageDialog(this, "Erro ao salvar o planejamento: " +
-                // e.getMessage(), "Erro",
-                // JOptionPane.ERROR_MESSAGE);
-                // }
                 atualizarTabela();
         }// GEN-LAST:event_btnSalvarPlanejamentoActionPerformed
 
         private void btnAlterarPlanejamentoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAlterarPlanejamentoActionPerformed
-                // Verifica se há uma linha selecionada
                 int selectedRow = tablePlanejamento.getSelectedRow();
                 if (selectedRow == -1) {
                         JOptionPane.showMessageDialog(this, "Por favor, selecione um planejamento para alterar.",
@@ -305,13 +281,11 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
                         return;
                 }
 
-                // Obtém os dados da linha selecionada
                 String dataString = (String) tablePlanejamento.getValueAt(selectedRow, 0);
                 LocalDate data = LocalDate.parse(dataString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 String servico = (String) tablePlanejamento.getValueAt(selectedRow, 1);
                 String receitaNome = (String) tablePlanejamento.getValueAt(selectedRow, 2);
 
-                // Encontra a receita correspondente ao nome selecionado
                 Receita receita = null;
                 for (Receita r : receitas) {
                         if (r.getNome().equals(receitaNome)) {
@@ -320,7 +294,6 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
                         }
                 }
 
-                // Busca o planejamento correspondente
                 Planejamento planejamentoSelecionado = null;
                 for (Planejamento p : gerPla.getPlanejamentos()) {
                         if (p.getData().equals(data) && p.getServico().equals(servico)
@@ -330,14 +303,12 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
                         }
                 }
 
-                // Se não encontrou, exibe erro
                 if (planejamentoSelecionado == null) {
                         JOptionPane.showMessageDialog(this, "Planejamento não encontrado para alteração.", "Erro",
                                         JOptionPane.ERROR_MESSAGE);
                         return;
                 }
 
-                // Abre a tela de alteração passando a referência da TelaPlanejamento
                 TelaAlterarPlanejamento telaAlterar = new TelaAlterarPlanejamento(planejamentoSelecionado, gerPla,
                                 this);
                 telaAlterar.setVisible(true);
@@ -347,7 +318,6 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
 
         private void btnExcluirPlanejamentoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnExcluirPlanejamentoActionPerformed
                 try {
-                        // Verifica se há uma linha selecionada na tabela
                         int selectedRow = tablePlanejamento.getSelectedRow();
                         if (selectedRow == -1) {
                                 JOptionPane.showMessageDialog(this,
@@ -356,13 +326,11 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
                                 return;
                         }
 
-                        // Obtém os dados da linha selecionada
                         String dataString = (String) tablePlanejamento.getValueAt(selectedRow, 0);
                         LocalDate data = LocalDate.parse(dataString, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                         String servico = (String) tablePlanejamento.getValueAt(selectedRow, 1);
                         String receitaNome = (String) tablePlanejamento.getValueAt(selectedRow, 2);
 
-                        // Encontra a receita correspondente ao nome selecionado
                         Receita receita = null;
                         for (Receita r : receitas) {
                                 if (r.getNome().equals(receitaNome)) {
@@ -371,7 +339,6 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
                                 }
                         }
 
-                        // Encontra o planejamento no gerPla que corresponde aos dados selecionados
                         Planejamento planejamentoSelecionado = null;
                         for (Planejamento p : gerPla.getPlanejamentos()) {
                                 if (p.getData().equals(data) && p.getServico().equals(servico)
@@ -381,7 +348,6 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
                                 }
                         }
 
-                        // Se o planejamento não for encontrado, exibe uma mensagem de erro
                         if (planejamentoSelecionado == null) {
                                 JOptionPane.showMessageDialog(this, "Planejamento não encontrado para exclusão.",
                                                 "Erro",
@@ -389,13 +355,10 @@ public class TelaPlanejamento extends javax.swing.JInternalFrame {
                                 return;
                         }
 
-                        // Chama o método de exclusão no GerenciarPlanejamento
                         String resultado = gerPla.excluirPlanejamento(planejamentoSelecionado);
 
-                        // Exibe mensagem de sucesso ou erro
                         JOptionPane.showMessageDialog(this, resultado);
 
-                        // Atualiza a tabela para refletir a exclusão
                         atualizarTabela();
 
                 } catch (Exception e) {

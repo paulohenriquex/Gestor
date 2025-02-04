@@ -13,18 +13,15 @@ public class GerenciarReceita {
     public Receita inserirReceita(String nome, String modoDePreparo, ArrayList<Ingrediente> ingredientes) {
         for (Receita r : receitas) {
             if (r.getNome().equalsIgnoreCase(nome)) {
-                // Se já existe uma receita com esse nome, usa o mesmo ID e adiciona
-                // ingredientes
                 r.getIngredientes().addAll(ingredientes);
                 r.setCustoDaReceita(calcularCusto(r.getIngredientes()));
                 return r;
             }
         }
 
-        // Se não encontrou receita com o mesmo nome, cria uma nova com um novo ID
         Receita novaReceita = new Receita(id, nome, modoDePreparo, ingredientes, calcularCusto(ingredientes));
         receitas.add(novaReceita);
-        id++; // Só incrementa se for uma receita nova
+        id++;
         return novaReceita;
     }
 

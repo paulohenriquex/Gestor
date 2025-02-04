@@ -19,7 +19,7 @@ public class TelaReceita extends javax.swing.JInternalFrame {
         ingredientesTemp = new ArrayList<>();
         initComponents();
         criarTabela();
-        carregarIngredientes(); // Carrega os ingredientes no JComboBox
+        carregarIngredientes();
         carregarReceitasNaTabela();
         setSize(600, 400);
         setLocation(50, 50);
@@ -170,9 +170,9 @@ public class TelaReceita extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void atualizarTabelaReceitas() {
-        modeloTabela.setRowCount(0); // Limpa a tabela antes de adicionar novas receitas
+        modeloTabela.setRowCount(0);
         for (Receita r : gerRec.relatorio()) {
-            inserirReceitaNaTabela(r); // Adiciona as receitas sem duplicar
+            inserirReceitaNaTabela(r);
         }
     }
 
@@ -220,12 +220,11 @@ public class TelaReceita extends javax.swing.JInternalFrame {
 
     public void carregarIngredientes() {
         for (Produto produto : produtos) {
-            cbIngrediente.addItem(produto.getNome()); // Adiciona o nome do produto no JComboBox
+            cbIngrediente.addItem(produto.getNome());
         }
     }
 
     private void inserirReceitaNaTabela(Receita receita) {
-        // Verifica se a receita já foi inserida na tabela para evitar duplicação
         for (Ingrediente ing : receita.getIngredientes()) {
             modeloTabela.addRow(new Object[] {
                     receita.getId(),
@@ -272,9 +271,8 @@ public class TelaReceita extends javax.swing.JInternalFrame {
         }
 
         if (receitaSelecionada != null) {
-            // Passar a linha selecionada e a referência da TelaReceita e GerenciarReceita
             TelaAlterarReceita telaAlterar = new TelaAlterarReceita(receitaSelecionada, produtos, gerRec.relatorio(),
-                    modeloTabela, row, this, gerRec); // Passando a referência do GerenciarReceita
+                    modeloTabela, row, this, gerRec);
             JDesktopPane desktopPane = getDesktopPane();
             desktopPane.add(telaAlterar);
             telaAlterar.setVisible(true);
@@ -290,11 +288,10 @@ public class TelaReceita extends javax.swing.JInternalFrame {
         }
     }// GEN-LAST:event_btnExcluirReceitaActionPerformed
 
-    // Corrigir o método de atualizar a tabela de receitas
     private void atualizarTabela() {
-        modeloTabela.setRowCount(0); // Limpa a tabela antes de adicionar novas receitas
+        modeloTabela.setRowCount(0);
         for (Receita r : gerRec.relatorio()) {
-            inserirReceitaNaTabela(r); // Adiciona as receitas sem duplicar
+            inserirReceitaNaTabela(r);
         }
     }
 
@@ -306,7 +303,7 @@ public class TelaReceita extends javax.swing.JInternalFrame {
                 return false;
             }
         };
-        tabelaReceitas1.setModel(modeloTabela); // Aqui você seta o modelo na tabela
+        tabelaReceitas1.setModel(modeloTabela);
     }
 
     private void limparCampos() {
